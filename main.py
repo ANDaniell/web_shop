@@ -99,7 +99,8 @@ def add_order():
     tag = Order(
         id=1,
         total_price=12121,
-        status_id=1
+        status_id=1,
+        user_id=1
     )
     db_sess.add(tag)
     db_sess.commit()
@@ -120,7 +121,9 @@ def add_user():
     status = User(
         name='Mike',
         email="mike@gmail.com",
-        hashed_password='a'
+        hashed_password='a',
+        hashed_address="улица пушкина дом колатушкина",
+        hashed_card="404"
     )
     db_sess.add(status)
     db_sess.commit()
@@ -128,16 +131,21 @@ def add_user():
 
 def main():
     db_session.global_init("db/blogs.db")
-"""
+    """
     working funktions
+    
+    
+    
+    
+    
+    """
+    add_user()
     add_tag()
     add_item()
-    add_item_image()
     add_tag_to_item()
-"""
-    # add_status()
-    # add_order()
-
+    add_item_image()
+    add_status()
+    add_order()
     # app.register_blueprint(news_api.blueprint)
 
     # app.run(debug=True)
