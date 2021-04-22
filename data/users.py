@@ -17,6 +17,10 @@ class User(SqlAlchemyBase):
     hashed_address = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_card = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
-    #TODO связь с rewiew, orders, favourite
+    # TODO связь с rewiew, favourite
 
     orders = orm.relation("Order", back_populates='user')
+
+    favourites = orm.relation("Good",
+                              secondary="good_to_user_table",
+                              backref="users_table", )

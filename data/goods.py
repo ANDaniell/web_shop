@@ -3,6 +3,15 @@ from sqlalchemy import orm
 import datetime
 from data.db_session import SqlAlchemyBase
 
+GoodToUser = sqlalchemy.Table(
+    'good_to_user_table',
+    SqlAlchemyBase.metadata,
+    sqlalchemy.Column('users_table', sqlalchemy.Integer,
+                      sqlalchemy.ForeignKey('users_table.id')),
+    sqlalchemy.Column('goods_table', sqlalchemy.Integer,
+                      sqlalchemy.ForeignKey('goods_table.id'))
+)
+
 
 class Good(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
     __tablename__ = 'goods_table'
@@ -22,6 +31,8 @@ class Good(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
                         backref="goods_table", )
 
     # email = sqlalchemy.Column(sqlalchemy.String,index=True, unique=True, nullable=True)
+
+    # TODO связь с rewiew, favourite
 
     def __repr__(self):
         return f'{self.id} {self.name} {self.about} {self.avatar}'

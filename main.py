@@ -96,13 +96,13 @@ def add_tag():
 
 def add_order():
     db_sess = db_session.create_session()
-    tag = Order(
+    order = Order(
         id=1,
         total_price=12121,
         status_id=1,
         user_id=1
     )
-    db_sess.add(tag)
+    db_sess.add(order)
     db_sess.commit()
 
 
@@ -129,6 +129,15 @@ def add_user():
     db_sess.commit()
 
 
+def add_favourite():
+    db_sess = db_session.create_session()
+    item = db_sess.query(Good).filter(Good.id == 1).first()
+    user = db_sess.query(User).filter(User.id == 1).first()
+    user.favourites.append(item)
+    db_sess.commit()
+
+
+
 def main():
     db_session.global_init("db/blogs.db")
     """
@@ -138,14 +147,16 @@ def main():
     
     
     
-    """
+    
     add_user()
     add_tag()
     add_item()
     add_tag_to_item()
     add_item_image()
     add_status()
-    add_order()
+    add_order()"""
+    add_favourite()
+
     # app.register_blueprint(news_api.blueprint)
 
     # app.run(debug=True)
