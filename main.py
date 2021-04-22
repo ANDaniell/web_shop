@@ -128,10 +128,13 @@ def add_user():
 
 def main():
     db_session.global_init("db/blogs.db")
+"""
+    working funktions
     add_tag()
     add_item()
     add_item_image()
     add_tag_to_item()
+"""
     # add_status()
     # add_order()
 
