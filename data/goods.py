@@ -32,7 +32,9 @@ class Good(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
 
     # email = sqlalchemy.Column(sqlalchemy.String,index=True, unique=True, nullable=True)
 
-    # TODO связь с rewiew, favourite
+    # TODO связь с rewiew
+
+    review = orm.relation("Review", back_populates='good')
 
     def __repr__(self):
         return f'{self.id} {self.name} {self.about} {self.avatar}'

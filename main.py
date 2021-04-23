@@ -6,6 +6,7 @@ from data import db_session
 from data.goods import Good
 from data.item_images import item_image
 from data.orders import Order
+from data.reviews import Review
 from data.statuses import Status
 from data.tags import Tag, TagToGood
 from data.users import User
@@ -137,6 +138,17 @@ def add_favourite():
     db_sess.commit()
 
 
+def add_review():
+    db_sess = db_session.create_session()
+    rewiew = Review(
+        grade=3,
+        about='среднечок',
+        user_id=1,
+        good_id=1
+    )
+    db_sess.add(rewiew)
+    db_sess.commit()
+
 
 def main():
     db_session.global_init("db/blogs.db")
@@ -145,7 +157,7 @@ def main():
     
     
     
-    
+    """
     
     
     add_user()
@@ -154,9 +166,9 @@ def main():
     add_tag_to_item()
     add_item_image()
     add_status()
-    add_order()"""
+    add_order()
     add_favourite()
-
+    add_review()
     # app.register_blueprint(news_api.blueprint)
 
     # app.run(debug=True)
