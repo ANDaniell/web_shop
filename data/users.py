@@ -14,7 +14,6 @@ class User(SqlAlchemyBase):
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                      default=datetime.datetime.now)
-    hashed_address = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_card = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
     # TODO связь с rewiew
@@ -25,4 +24,7 @@ class User(SqlAlchemyBase):
 
     favourites = orm.relation("Good",
                               secondary="good_to_user_table",
-                              backref="users_table", )
+                              backref="users_table")
+    address_id = sqlalchemy.Column(sqlalchemy.Integer,
+                                   sqlalchemy.ForeignKey("address_table.id"))
+    address = orm.relation('Address')

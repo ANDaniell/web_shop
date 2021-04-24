@@ -12,6 +12,16 @@ GoodToUser = sqlalchemy.Table(
                       sqlalchemy.ForeignKey('goods_table.id'))
 )
 
+GoodToOrder = sqlalchemy.Table(
+    'good_to_order_table',
+    SqlAlchemyBase.metadata,
+    sqlalchemy.Column('orders_by_table', sqlalchemy.Integer,
+                      sqlalchemy.ForeignKey('orders_table.id')),
+    sqlalchemy.Column('goods_by_table', sqlalchemy.Integer,
+                      sqlalchemy.ForeignKey('goods_table.id'))
+
+)
+
 
 class Good(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
     __tablename__ = 'goods_table'
@@ -28,16 +38,13 @@ class Good(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
 
     tags = orm.relation("Tag",
                         secondary="tag_to_good_table",
-                        backref="goods_table", )
+                        backref="goods_table")
 
     # email = sqlalchemy.Column(sqlalchemy.String,index=True, unique=True, nullable=True)
 
     # TODO связь с rewiew
 
     review = orm.relation("Review", back_populates='good')
-
-    def __repr__(self):
-        return f'{self.id} {self.name} {self.about} {self.avatar}'
 
     def set_avatar(self, path):
         self.avatar = path

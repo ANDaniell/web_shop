@@ -15,6 +15,6 @@ TagToGood = sqlalchemy.Table(
 
 class Tag(SqlAlchemyBase):
     __tablename__ = 'tags_table'
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True,
-                           autoincrement=True)
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer,
+                           primary_key=True, autoincrement=True)
+    name = sqlalchemy.Column(sqlalchemy.String, unique=True)

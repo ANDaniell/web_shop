@@ -16,9 +16,9 @@ class Review(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
 
     # TODO связь с user and item
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("users_table.id"), nullable=True)
+                                sqlalchemy.ForeignKey("users_table.id"))
     user = orm.relation('User')
 
     good_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("goods_table.id"), nullable=True)
+                                sqlalchemy.ForeignKey("goods_table.id"))
     good = orm.relation('Good')
