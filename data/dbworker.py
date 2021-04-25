@@ -33,10 +33,12 @@ class DBWorker():
                 user.address.append(address)
             elif address is int:
                 user.address_id = int(address)
-
+        print(name, email, password, address)
         self.db_sess.add(user)
         self.db_sess.commit()
         return user
+
+
 
     def set_user_data(self, user, **params):
         if user is int:

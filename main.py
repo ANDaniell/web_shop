@@ -6,6 +6,7 @@ import datetime
 from flask_mail import Mail
 
 from data import db_session
+from data.dbworker import DBWorker
 from data.goods import Good
 from data.item_images import item_image
 from data.location import Address
@@ -45,12 +46,19 @@ def img(path):
 @app.route('/test')
 def test():
     url = url_for('item', id_item='101')
+    dbworker = DBWorker()
+    dbworker.add_user('Daniel', 'email02@gmail.com', 'password')
     return make_response(render_template('test.html', item1=url))
 
 
 def main():
-    db_session.global_init("db/blogs.db")
     app.run(host='127.0.0.1', debug=True)
+
+
+    #db_session.global_init("db/blogs.db")
+
+
+
 
 
 if __name__ == '__main__':
