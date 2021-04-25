@@ -25,5 +25,8 @@ class Order(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
     address = orm.relation('Address')
 
     goods_by_order = orm.relation("Good",
-                         secondary="good_to_order_table",
-                         backref="orders_table")
+                                  secondary="good_to_order_table",
+                                  backref="orders_table")
+
+    def __repr__(self):
+        return f'<ORDER {self.id}, {self.total_price}, {self.date}>'
