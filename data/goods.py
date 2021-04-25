@@ -40,13 +40,13 @@ class Good(SqlAlchemyBase):  # , UserMixin, SerializerMixin):
     # news = orm.relation("News", back_populates='user')
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    price = sqlalchemy.Column(sqlalchemy.Float, nullable=True)
+    name = sqlalchemy.Column(sqlalchemy.String)
+    price = sqlalchemy.Column(sqlalchemy.Float)
     avatar = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    about = sqlalchemy.Column(sqlalchemy.String)
     characteristics = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     discount = sqlalchemy.Column(sqlalchemy.Float, nullable=True)
-    amount = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
+    amount = sqlalchemy.Column(sqlalchemy.Integer)
 
     tags = orm.relation("Tag",
                         secondary="tag_to_good_table",

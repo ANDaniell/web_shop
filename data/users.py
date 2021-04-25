@@ -14,7 +14,6 @@ class User(SqlAlchemyBase):
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                      default=datetime.datetime.now)
-    hashed_card = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
     # TODO связь с rewiew
 
