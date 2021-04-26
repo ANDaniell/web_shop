@@ -131,3 +131,9 @@ def add_address(city, region):
     )
     db_sess.add(address)
     db_sess.commit()
+
+{{url_for('static', filename='styles/style.css')}}
+<img src="http://127.0.0.1:5000/img/{{img}}" alt="альтернативный текст">
+
+<h2>{{item["head"]}}</h2>
+<div>{{item["about"]}}</div>

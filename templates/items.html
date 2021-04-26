@@ -35,85 +35,118 @@
         <a class="btn btn-outline-secondary" href="#">Coming soon</a>
     </div>
     <a href="{{url_for('item', id_item='101') }}">
-    <div class="product-device shadow-sm d-none d-md-block"></div>
-    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
     </a>
 </div>
+{% for goods in goods_resp %}
+
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
         <div class="my-3 py-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
+            <h2 class="display-5">{{goods[0]["name"]}}</h2>
+            <p class="lead">{{goods[0]["about"]}}</p>
         </div>
-        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        <a href="{{url_for('item', id_item=goods[0]['id']) }}">
+            <div class="bg-light shadow-sm mx-auto"
+                 style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </a>
     </div>
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-</div>
 
+    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        {% if leng>=2 %}
+        <div class="my-3 p-3">
+            <h2 class="display-5">{{goods[1]["name"]}}</h2>
+            <p class="lead">{{goods[1]["about"]}}</p>
+
+
+        </div>
+
+        <a href="{{url_for('item', id_item=goods[1]['id']) }}">
+            <div>
+                <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
+                     src="{{url_for('static', filename='img/02_x.jpg')}}" alt="альтернативный текст">
+                {% endif %}
+            </div>
+        </a>
+    </div>
+
+
+</div>
+{% if leng>=3 %}
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
         <div class="my-3 p-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
+            <h2 class="display-5">{{goods[2]["name"]}}</h2>
+            <p class="lead">{{goods[2]["about"]}}</p>
         </div>
-        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        <a href="{{url_for('item', id_item=goods[2]['id']) }}">
+            <div>
+                <div class="bg-dark shadow-sm mx-auto"
+                     style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+        </a>
     </div>
+
     <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        {% if leng>=4 %}
         <div class="my-3 py-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
+            <h2 class="display-5">{{goods[3]["name"]}}</h2>
+            <p class="lead">{{goods[3]["about"]}}</p>
         </div>
-        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        <a href="{{url_for('item', id_item=goods[3]['id']) }}">
+            <div>
+                <div class="bg-light shadow-sm mx-auto"
+                     style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+            </div>
+        </a>
+        {% endif %}
     </div>
-</div>
 
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 py-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
 </div>
-
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+{% endif %}
+{% endfor %}
+<center>
+    <div class="container" style="padding-top: 20">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-lg">
+                {% if number<=1 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><span
+                            aria-hidden="true">&laquo;</span></a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="{{url_for('items', number=number-1)  }}">{{ number -1}}</a>
+                </li>
+                {%else%}
+                <li class="page-item">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><span
+                            aria-hidden="true">&laquo;</span></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="{{url_for('items', number=number-1)  }}">{{ number -1}}</a>
+                </li>
+                {%endif%}
+                <li class="page-item"><a class="page-link" href="{{url_for('items', number=number)  }}">{{ number }}</a>
+                </li>
+                {% if flag %}
+                <li class="page-item"><a class="page-link" href="{{url_for('items', number=number+1)  }}">{{ number + 1
+                    }}</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="{{url_for('items', number=number+1)  }}">{{ number + 1
+                    }}</a></li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a>
+                </li>
+                {%endif%}
+            </ul>
+        </nav>
     </div>
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 py-3">
-            <h2 class="display-5">Another headline</h2>
-            <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-</div>
-<div class="after-posts">
-    <button type="button" class="btn btn-secondary btn-lg btn-block load_more">Кнопка блочного уровня
-        <span class="spinner-grow text-light" role="status"></span>
-    </button>
-</div>
-
-
+</center>
 {% endblock %}
 
 

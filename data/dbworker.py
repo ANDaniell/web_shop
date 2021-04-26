@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from werkzeug.security import check_password_hash
+
 from data import db_session
 from data.goods import Good
 from data.item_images import item_image
@@ -12,6 +14,7 @@ from data.users import User
 
 class DBWorker():
     _instance = None
+
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(DBWorker, cls).__new__(cls)
@@ -27,7 +30,9 @@ class DBWorker():
             name=str(name),
             email=str(email)
         )
+        print(password)
         user.set_hashed_password(password)
+        print(user.hashed_password)
         if address:
             if isinstance(address, Address):
                 user.address.append(address)
@@ -38,7 +43,13 @@ class DBWorker():
         self.db_sess.commit()
         return user
 
+    def check_user(self, mail, password):
+        user = self.db_sess.query(User).filter(User.email == mail).first()
+        return check_password_hash(user.hashed_password, password)
 
+    def get_user(self, email):
+        user = self.db_sess.query(User).filter(User.email == email).first()
+        return user, user.id
 
     def set_user_data(self, user, **params):
         if user is int:
@@ -158,7 +169,7 @@ class DBWorker():
         if amount:
             good.amount = amount
 
-        self.db_sess.delete(good)
+        self.db_sess.add(good)
         self.db_sess.commit()
         return good
 
@@ -177,6 +188,15 @@ class DBWorker():
         self.db_sess.commit()
         return good
 
+    def get_goods(self, begin, end):
+        arr = []
+        for i in range(begin, end):
+            good = self.db_sess.query(Good).filter(Good.id == i).first()
+            arr.append(
+                {'id': good.id, 'name': good.name, 'about': good.about, 'discount': good.discount, 'tags': good.tags,
+                 'price': good.price, 'avatar': good.avatar})
+        return arr
+
     def get_good_rating(self, good) -> float:
         if good is int:
             good = self.db_sess.query(Good).filter(Good.id == good).first()
@@ -191,3 +211,7 @@ class DBWorker():
 
     def search_good(self, query):
         return query
+
+    def count_goods(self):
+        rows = self.db_sess.query(Good).count()
+        return rows
