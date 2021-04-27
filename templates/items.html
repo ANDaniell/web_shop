@@ -43,33 +43,36 @@
 
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+    <form method="post">
     <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
+        <div class="my-3 py-3" >
             <h2 class="display-5">{{goods[0]["name"]}}</h2>
             <p class="lead">{{goods[0]["about"]}}</p>
+            <button type="submit" value={{goods[0]["id"]}} name="guess0" class="btn btn-primary">Добавить в корзину</button>
         </div>
         <a href="{{url_for('item', id_item=goods[0]['id']) }}">
             <div class="bg-light shadow-sm mx-auto"
                  style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
         </a>
     </div>
+    </form>
 
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
         {% if leng>=2 %}
-        <div class="my-3 p-3">
-            <h2 class="display-5">{{goods[1]["name"]}}</h2>
-            <p class="lead">{{goods[1]["about"]}}</p>
-
-
-        </div>
-
-        <a href="{{url_for('item', id_item=goods[1]['id']) }}">
-            <div>
-                <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
-                     src="{{url_for('static', filename='img/02_x.jpg')}}" alt="альтернативный текст">
-                {% endif %}
+        <div method="post">
+            <div class="my-3 p-3">
+                <h2 class="display-5">{{goods[1]["name"]}}</h2>
+                <p class="lead">{{goods[1]["about"]}}</p>
+                <button type="submit" type="submit" value={{goods[1]["id"]}} name="guess1"  class="btn btn-primary">Добавить в корзину</button>
             </div>
-        </a>
+            <a href="{{url_for('item', id_item=goods[1]['id']) }}">
+                <div>
+                    <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
+                         src="{{url_for('static', filename='img/02_x.jpg')}}" alt="альтернативный текст">
+                    {% endif %}
+                </div>
+            </a>
+        </div>
     </div>
 
 
@@ -77,9 +80,10 @@
 {% if leng>=3 %}
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
+        <div class="my-3 p-3" method="post">
             <h2 class="display-5">{{goods[2]["name"]}}</h2>
             <p class="lead">{{goods[2]["about"]}}</p>
+            <button type="submit" value={{goods[2]["id"]}} name="guess2" class="btn btn-primary">Добавить в корзину</button>
         </div>
         <a href="{{url_for('item', id_item=goods[2]['id']) }}">
             <div>
@@ -91,9 +95,10 @@
 
     <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
         {% if leng>=4 %}
-        <div class="my-3 py-3">
+        <div class="my-3 py-3" method="post">
             <h2 class="display-5">{{goods[3]["name"]}}</h2>
             <p class="lead">{{goods[3]["about"]}}</p>
+            <button type="submit" value={{goods[3]["id"]}} name="guess3" class="btn btn-primary">Добавить в корзину</button>
         </div>
         <a href="{{url_for('item', id_item=goods[3]['id']) }}">
             <div>
@@ -137,7 +142,8 @@
                     <a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a>
                 </li>
                 {% else %}
-                <li class="page-item disabled"><a class="page-link" href="{{url_for('items', number=number+1)  }}">{{ number + 1
+                <li class="page-item disabled"><a class="page-link" href="{{url_for('items', number=number+1)  }}">{{
+                    number + 1
                     }}</a></li>
                 <li class="page-item disabled">
                     <a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a>

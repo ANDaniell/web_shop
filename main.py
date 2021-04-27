@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, send_from_directory, url_for, make_response, request
+from flask import Flask, render_template, send_from_directory, url_for, make_response, request, session
 import datetime
 
 from flask_login import login_manager, LoginManager, login_user, logout_user, login_required
@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash
 from werkzeug.utils import redirect
 
 from data import db_session
+from data import basket
 from data.dbworker import DBWorker
 from data.goods import Good
 from data.item_images import item_image
@@ -34,7 +35,7 @@ def index():
     return make_response(render_template('index.html'))
 
 
-@app.route('/items/<number>')
+@app.route('/items/<number>', methods=['POST', 'GET'])
 def items(number):
     dbworker = DBWorker()
     numb = str(number)
@@ -45,18 +46,8 @@ def items(number):
     else:
         maxx = dbworker.count_goods()
     minn = (int(number) - 1) * 8 + 1
-    print(minn, number)
     goods = dbworker.get_goods(minn, maxx)
-    print(goods)
-    items = [{'head': 'name1', 'about': 'some pretty inf'}, {'head': 'name1', 'about': 'some pretty inf'},
-             {'head': 'name1', 'about': 'some pretty inf'}, {'head': 'name1', 'about': 'some pretty inf'},
-             {'head': 'name1', 'about': 'some pretty inf'}]
-    resp = items[0:3]
     leng = maxx - int(number)
-    flag = False
-    if leng % 2 == 0:
-        flag = True
-    # print(flag, number, leng)
     if leng > 4:
         goods_resp = [[goods[0], goods[1], goods[2], goods[3]]]
         gg = []
@@ -67,16 +58,24 @@ def items(number):
     else:
         goods_resp = [goods]
         leng = len(goods)
-
-    print(leng)
+    #print(leng)
     flag = (dbworker.count_goods() > (int(number) * 8 + 1))
-    return make_response(render_template('items.html',
-                                         goods_resp=goods_resp,
-                                         number=int(number),
-                                         leng=leng, flag=flag))
+    if request.method == 'GET':
+        return make_response(render_template('items.html',
+                                             goods_resp=goods_resp,
+                                             number=int(number),
+                                             leng=leng, flag=flag))
+    elif request.method == 'POST':
+        res = str(session.items())
+        print(request.form.get('guess1'))
+        print(request.form.get('guess2'))
+        print(request.form.get('guess3'))
+        print(request.form.get('guess0'))
+        print(res)
+        return redirect(url_for('items', number=number))
 
 
-@app.route('/items/item/<id_item>')
+@app.route('/items/item/<id_item>',  methods=['POST', 'GET'])
 def item(id_item):
     return make_response(render_template('item.html'))
 
@@ -167,6 +166,7 @@ def send_email(subject, text_body, html_body, sender=ADMINS[0], recipients=ADMIN
 
 def main():
     mail = Mail(app)
+    app.register_blueprint(basket.blueprint)
     app.run(host='127.0.0.1', debug=True)
     # db_session.global_init("db/blogs.db")
 
