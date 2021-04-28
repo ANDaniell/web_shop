@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, send_from_directory, url_for, make_response, request, session
 import datetime
 
-from flask_login import login_manager, LoginManager, login_user, logout_user, login_required
+from flask_login import login_manager, LoginManager, login_user, logout_user, login_required, current_user
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import redirect
@@ -35,6 +35,19 @@ def index():
     return make_response(render_template('index.html'))
 
 
+@app.route('/user')
+def user():
+    dbworker = DBWorker()
+    if current_user.is_authenticated:
+        print('ok')
+        print(current_user.get_id())
+
+        #user = current_user.get_id()  # return username in get_id()
+    else:
+        return 'войдите или зарегистрируйтесь'
+    return make_response(render_template('user_page.html', user = user))
+
+
 @app.route('/items/<number>', methods=['POST', 'GET'])
 def items(number):
     dbworker = DBWorker()
@@ -58,24 +71,30 @@ def items(number):
     else:
         goods_resp = [goods]
         leng = len(goods)
-    #print(leng)
+    # print(leng)
     flag = (dbworker.count_goods() > (int(number) * 8 + 1))
+    res = str(session.get("current_cart"))
+    print(res)
+    print(session.items())
     if request.method == 'GET':
         return make_response(render_template('items.html',
                                              goods_resp=goods_resp,
                                              number=int(number),
                                              leng=leng, flag=flag))
+
     elif request.method == 'POST':
-        res = str(session.items())
+        res = str(session.get("current_cart"))
+        '''
         print(request.form.get('guess1'))
         print(request.form.get('guess2'))
         print(request.form.get('guess3'))
         print(request.form.get('guess0'))
+        '''
         print(res)
         return redirect(url_for('items', number=number))
 
 
-@app.route('/items/item/<id_item>',  methods=['POST', 'GET'])
+@app.route('/items/item/<id_item>', methods=['POST', 'GET'])
 def item(id_item):
     return make_response(render_template('item.html'))
 
@@ -102,6 +121,7 @@ def logout():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     dbworker = DBWorker()
     if request.method == 'GET':
         return make_response(render_template('login_user.html'))
@@ -175,6 +195,5 @@ if __name__ == '__main__':
     '''
     dbworker = DBWorker()
     for i in range(12):
-        name = 'smartphone'+str(i)
-        dbworker.add_good(name, 222)'''
+        a = dbworker.set_good_data(i,)'''
     main()

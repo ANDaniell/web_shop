@@ -1,6 +1,8 @@
 import flask
 from flask import make_response, render_template, session
 
+from data.dbworker import DBWorker
+
 blueprint = flask.Blueprint(
     'busket_api',
     __name__,
@@ -8,10 +10,20 @@ blueprint = flask.Blueprint(
 )
 
 
-@blueprint.route('/basket',  methods=['POST', 'GET'])
+@blueprint.route('/basket', methods=['POST', 'GET'])
 def get_basket():
-    orders_sess = session.get('orders_sess', 0)
-    return make_response(render_template('basket.html', data = 1))
+    '''
+    # breakpoint()
+    orders_sess = session.get('current_cart', 0)
+    # orders_session = session.get('orders_sess', 0)
+    # print(str(session.items()))
+    print(orders_sess)'''
+    goods = [1,2,3,5]
+    dbworker = DBWorker()
+    data = []
+    for i in goods:
+        data.append(dbworker.get_good(i))
+    return make_response(render_template('basket.html', data=data))
 
 
 @blueprint.route("/session_test")
@@ -20,7 +32,7 @@ def session_test():
 
     cart_item = {'pineapples': '10', 'apples': '20', 'mangoes': '30'}
     if 'cart_item' in session:
-        session['cart_item']['items'].append({'id01':1212})
+        session['cart_item']['items'].append({'id01': 1212})
         session.modified = True
     else:
         session['cart_item'] = cart_item

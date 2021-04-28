@@ -184,7 +184,7 @@ class DBWorker():
         except BaseException as be:
             raise ValueError(
                 f'Wrong parameters for Good class were passed: {be}')
-        self.db_sess.update(good)
+        self.db_sess.merge(good)
         self.db_sess.commit()
         return good
 
@@ -196,6 +196,13 @@ class DBWorker():
                 {'id': good.id, 'name': good.name, 'about': good.about, 'discount': good.discount, 'tags': good.tags,
                  'price': good.price, 'avatar': good.avatar})
         return arr
+
+    def get_good(self, id):
+        good = self.db_sess.query(Good).filter(Good.id == id).first()
+        resp = {'id': good.id, 'name': good.name, 'about': good.about, 'discount': good.discount, 'tags': good.tags,
+                 'price': good.price, 'avatar': good.avatar}
+        return resp
+
 
     def get_good_rating(self, good) -> float:
         if good is int:

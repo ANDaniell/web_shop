@@ -17,7 +17,7 @@
 <meta name="msapplication-config" content="/docs/4.6/assets/img/favicons/browserconfig.xml">
 <meta name="theme-color" content="#563d7c">
 
-
+<script type="text/javascript" src='{{ url_for("static", filename="cart.js") }}'></script>
 <!-- Custom styles for this template -->
 <link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='product.css', v=1)}}">
 <link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='styles.css', v=1)}}">
@@ -44,35 +44,45 @@
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <form method="post">
-    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3" >
-            <h2 class="display-5">{{goods[0]["name"]}}</h2>
-            <p class="lead">{{goods[0]["about"]}}</p>
-            <button type="submit" value={{goods[0]["id"]}} name="guess0" class="btn btn-primary">Добавить в корзину</button>
+        <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">{{goods[0]["name"]}}</h2>
+                <p class="lead">{{goods[0]["about"]}}</p>
+                <button onclick="addGoodToCart({{goods[0]['id']}})" value={{goods[3]["id"]}} name="guess0"
+                        class="btn btn-primary">Добавить в корзину {{goods[0]["id"]}}
+                </button>
+            </div>
+            <a href="{{url_for('item', id_item=goods[0]['id']) }}">
+                <div>
+                        <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
+                             src="{{url_for('static', filename=goods[0]['avatar'])}}" alt="альтернативный текст">
+
+                    </div>
+            </a>
         </div>
-        <a href="{{url_for('item', id_item=goods[0]['id']) }}">
-            <div class="bg-light shadow-sm mx-auto"
-                 style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-        </a>
-    </div>
     </form>
 
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
         {% if leng>=2 %}
-        <div method="post">
-            <div class="my-3 p-3">
-                <h2 class="display-5">{{goods[1]["name"]}}</h2>
-                <p class="lead">{{goods[1]["about"]}}</p>
-                <button type="submit" type="submit" value={{goods[1]["id"]}} name="guess1"  class="btn btn-primary">Добавить в корзину</button>
-            </div>
-            <a href="{{url_for('item', id_item=goods[1]['id']) }}">
-                <div>
-                    <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
-                         src="{{url_for('static', filename='img/02_x.jpg')}}" alt="альтернативный текст">
-                    {% endif %}
+        <form method="post">
+            <div>
+                <div class="my-3 p-3">
+                    <h2 class="display-5">{{goods[1]["name"]}}</h2>
+                    <p class="lead">{{goods[1]["about"]}}</p>
+                    <button onclick="addGoodToCart({{goods[1]['id']}})" value={{goods[1]["id"]}} name="guess1"
+                            class="btn btn-primary">Добавить в корзину
+                    </button>
                 </div>
-            </a>
-        </div>
+                <a href="{{url_for('item', id_item=goods[1]['id']) }}">
+                    <div>
+                        <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
+                             src="{{url_for('static', filename=goods[1]['avatar'])}}" alt="альтернативный текст">
+
+                    </div>
+                </a>
+            </div>
+        </form>
+        {% endif %}
     </div>
 
 
@@ -80,32 +90,46 @@
 {% if leng>=3 %}
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3" method="post">
+        <form method="post">
+        <div class="my-3 p-3">
             <h2 class="display-5">{{goods[2]["name"]}}</h2>
             <p class="lead">{{goods[2]["about"]}}</p>
-            <button type="submit" value={{goods[2]["id"]}} name="guess2" class="btn btn-primary">Добавить в корзину</button>
+            <button onclick="addGoodToCart({{goods[2]['id']}})" value={{goods[2]["id"]}} name="guess2"
+                    class="btn btn-primary">Добавить в корзину
+            </button>
         </div>
         <a href="{{url_for('item', id_item=goods[2]['id']) }}">
             <div>
-                <div class="bg-dark shadow-sm mx-auto"
-                     style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+                <div>
+                        <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
+                             src="{{url_for('static', filename=goods[2]['avatar'])}}" alt="альтернативный текст">
+
+                    </div>
             </div>
         </a>
+        </form>
     </div>
 
     <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
         {% if leng>=4 %}
-        <div class="my-3 py-3" method="post">
+        <form method="post">
+        <div class="my-3 py-3">
             <h2 class="display-5">{{goods[3]["name"]}}</h2>
             <p class="lead">{{goods[3]["about"]}}</p>
-            <button type="submit" value={{goods[3]["id"]}} name="guess3" class="btn btn-primary">Добавить в корзину</button>
+            <button onclick="addGoodToCart({{goods[3]['id']}})" value={{goods[3]["id"]}} name="guess3"
+                    class="btn btn-primary">Добавить в корзину
+            </button>
         </div>
         <a href="{{url_for('item', id_item=goods[3]['id']) }}">
             <div>
-                <div class="bg-light shadow-sm mx-auto"
-                     style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+                <div>
+                        <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
+                             src="{{url_for('static', filename=goods[3]['avatar'])}}" alt="альтернативный текст">
+
+                    </div>
             </div>
         </a>
+        </form>
         {% endif %}
     </div>
 
