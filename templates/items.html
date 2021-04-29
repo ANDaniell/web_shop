@@ -43,14 +43,14 @@
 
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-    <form method="post">
         <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
             <div class="my-3 py-3">
                 <h2 class="display-5">{{goods[0]["name"]}}</h2>
                 <p class="lead">{{goods[0]["about"]}}</p>
-                <button onclick="addGoodToCart({{goods[0]['id']}})" value={{goods[3]["id"]}} name="guess0"
-                        class="btn btn-primary">Добавить в корзину {{goods[0]["id"]}}
+                <button value={{goods[3]["id"]}} name="guess0"
+                        class="btn btn-primary btn-add-cart">Добавить в корзину {{goods[0]["id"]}}
                 </button>
+                <button type="submit" on class="btn btn-primary">Войти</button>
             </div>
             <a href="{{url_for('item', id_item=goods[0]['id']) }}">
                 <div>
@@ -60,17 +60,15 @@
                     </div>
             </a>
         </div>
-    </form>
 
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
         {% if leng>=2 %}
-        <form method="post">
             <div>
                 <div class="my-3 p-3">
                     <h2 class="display-5">{{goods[1]["name"]}}</h2>
                     <p class="lead">{{goods[1]["about"]}}</p>
-                    <button onclick="addGoodToCart({{goods[1]['id']}})" value={{goods[1]["id"]}} name="guess1"
-                            class="btn btn-primary">Добавить в корзину
+                    <button value={{goods[1]["id"]}} name="guess1"
+                            class="btn btn-primary btn-add-cart">Добавить в корзину
                     </button>
                 </div>
                 <a href="{{url_for('item', id_item=goods[1]['id']) }}">
@@ -81,7 +79,6 @@
                     </div>
                 </a>
             </div>
-        </form>
         {% endif %}
     </div>
 
@@ -90,12 +87,11 @@
 {% if leng>=3 %}
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <form method="post">
         <div class="my-3 p-3">
             <h2 class="display-5">{{goods[2]["name"]}}</h2>
             <p class="lead">{{goods[2]["about"]}}</p>
-            <button onclick="addGoodToCart({{goods[2]['id']}})" value={{goods[2]["id"]}} name="guess2"
-                    class="btn btn-primary">Добавить в корзину
+            <button value={{goods[2]["id"]}} name="guess2"
+                    class="btn btn-primary btn-add-cart">Добавить в корзину
             </button>
         </div>
         <a href="{{url_for('item', id_item=goods[2]['id']) }}">
@@ -107,17 +103,15 @@
                     </div>
             </div>
         </a>
-        </form>
     </div>
 
     <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
         {% if leng>=4 %}
-        <form method="post">
         <div class="my-3 py-3">
             <h2 class="display-5">{{goods[3]["name"]}}</h2>
             <p class="lead">{{goods[3]["about"]}}</p>
-            <button onclick="addGoodToCart({{goods[3]['id']}})" value={{goods[3]["id"]}} name="guess3"
-                    class="btn btn-primary">Добавить в корзину
+            <button value={{goods[3]["id"]}} name="guess3"
+                    class="btn btn-primary btn-add-cart">Добавить в корзину
             </button>
         </div>
         <a href="{{url_for('item', id_item=goods[3]['id']) }}">
@@ -129,7 +123,6 @@
                     </div>
             </div>
         </a>
-        </form>
         {% endif %}
     </div>
 

@@ -3,3 +3,12 @@ padding: 100rem; 2rem;
 border-radius: 0;}
 .load_more span{
 display:none;}
+
+.not_scale_img {
+ margin-top: 1rem;
+  object-fit: none; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 250px;
+  height: 250px;
+  margin-bottom: 1rem;
+}

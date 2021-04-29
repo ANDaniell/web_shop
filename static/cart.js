@@ -1,15 +1,12 @@
-function addGoodToCart(productId) {
-  var currentCart = localStorage.getItem("current_cart", null);
-  if (currentCart == null) {
-    currentCart = [];
-  }
-  if (typeof currentCart == "string") {
-    var currentCart = currentCart.split(',');
-  }
-
-  if (currentCart.indexOf(productId.toString()) == -1) {
-    currentCart.push(productId);
-    localStorage.setItem("current_cart", currentCart);
-    alert(localStorage.getItem("current_cart"));
-  }
-}
+$(document).ready(function () {
+  $(".btn-add-cart").click(function () {
+    var id = $(this).attr("value");
+    $.ajax({
+      type: "POST",
+      url: '/addtocart',
+      // dataType: "json",
+      contentType: "application/json",
+      data: JSON.stringify({id_tov: id})
+      });
+  });
+});

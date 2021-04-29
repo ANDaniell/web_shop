@@ -38,41 +38,33 @@
 <main>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            {% for i in data %}
+            {% if loop.first %}<li data-target="#myCarousel" data-slide-to="0" class="active"></li>{% endif %}
+            {% if not loop.first %}<li data-target="#myCarousel" data-slide-to="{{ loop.index }}"></li>{% endif %}
+            {% endfor %}
         </ol>
         <div class="carousel-inner">
+            {% for i in data %}
+        {% if loop.first %}
             <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                     preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-                    <rect width="100%" height="100%" fill="#777"/>
-                </svg>
+                   <img class="img-fluid" src="{{url_for('static', filename=i)}}" alt="...">
                 <div class="container">
                     <div class="carousel-caption text-left">
                     </div>
                 </div>
             </div>
+            {% endif %}
+            {% if not loop.first %}
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                     preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-                    <rect width="100%" height="100%" fill="#777"/>
-                </svg>
+
+                    <img class="img-fluid" src="{{url_for('static', filename=i)}}"  alt="...">
                 <div class="container">
                     <div class="carousel-caption">
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                     preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-                    <rect width="100%" height="100%" fill="#777"/>
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-right">
-                    </div>
-                </div>
-            </div>
+            {% endif %}
+            {% endfor %}
         </div>
         <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -88,21 +80,15 @@
                 <div class="col-md-6">
                     <div class="h-100 p-5 text-white bg-dark rounded-3"
                          style="background-color: #212529 !important;">
-                        <h2>Change the background</h2>
-                        <p>Swap the background-color utility and add a `.text-*` color utility to mix up the
-                            jumbotron
-                            look.
-                            Then, mix and match with additional component themes and more.</p>
+                        <h2>О товаре</h2>
+                        <p>{{ about }}</p>
                         <button class="btn btn-outline-light" type="button">Example button</button>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="h-100 p-5 bg-light border rounded-3">
-                        <h2>Add borders</h2>
-                        <p>Or, keep it light and add a border for some added definition to the boundaries of your
-                            content.
-                            Be sure to look under the hood at the source HTML here as we've adjusted the alignment and
-                            sizing of both column's content for equal-height.</p>
+                        <h2>Характеристики</h2>
+                        <p>{{ inf }}</p>
                         <button class="btn btn-outline-secondary" type="button">Example button</button>
                     </div>
                 </div>

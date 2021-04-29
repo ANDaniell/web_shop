@@ -51,6 +51,13 @@ class DBWorker():
         user = self.db_sess.query(User).filter(User.email == email).first()
         return user, user.id
 
+    def get_address_by_user(self, id):
+        user = self.db_sess.query(User).filter(User.id == id).first()
+        if user is None:
+            raise ValueError(f'No user with id {id}')
+        address = self.db_sess.query(Address).filter(Address.id == user.address.id).first()
+        return address
+
     def set_user_data(self, user, **params):
         if user is int:
             user = self.db_sess.query(User).filter(User.id == user).first()
@@ -102,6 +109,16 @@ class DBWorker():
         self.db_sess.delete(order)
         self.db_sess.commit()
         return order
+
+    def get_orders(self, user_id):
+        if user_id is int:
+            user = self.db_sess.query(Order).filter(Order.user_id == user_id).all()
+            if user is None:
+                raise ValueError(f'No such orders with ID {user} in database')
+            oreders = []
+            for i in user:
+                oreders.append(self.db_sess.query(Order).filter(Order.id == i).first())
+            return oreders
 
     def add_good_to_order(self, order, good):
         if order is int:
@@ -199,10 +216,14 @@ class DBWorker():
 
     def get_good(self, id):
         good = self.db_sess.query(Good).filter(Good.id == id).first()
+        images = self.db_sess.query(item_image).filter(item_image.item_id == good.id).all()
+        img = []
+        for i in images:
+            img.append(i.path)
         resp = {'id': good.id, 'name': good.name, 'about': good.about, 'discount': good.discount, 'tags': good.tags,
-                 'price': good.price, 'avatar': good.avatar}
+                'price': good.price, 'avatar': good.avatar, 'amount': good.amount,
+                'characteristics': good.characteristics, 'img': img}
         return resp
-
 
     def get_good_rating(self, good) -> float:
         if good is int:

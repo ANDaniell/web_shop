@@ -41,11 +41,12 @@ def user():
     if current_user.is_authenticated:
         print('ok')
         print(current_user.get_id())
-
-        #user = current_user.get_id()  # return username in get_id()
+        data = dbworker.get_orders(current_user.get_id())
+        print(data)
+        # user = current_user.get_id()  # return username in get_id()
     else:
         return 'войдите или зарегистрируйтесь'
-    return make_response(render_template('user_page.html', user = user))
+    return make_response(render_template('user_page.html', user=user, data=data))
 
 
 @app.route('/items/<number>', methods=['POST', 'GET'])
@@ -74,29 +75,23 @@ def items(number):
     # print(leng)
     flag = (dbworker.count_goods() > (int(number) * 8 + 1))
     res = str(session.get("current_cart"))
-    print(res)
-    print(session.items())
+    print(session.items(), res)
     if request.method == 'GET':
         return make_response(render_template('items.html',
                                              goods_resp=goods_resp,
                                              number=int(number),
                                              leng=leng, flag=flag))
 
-    elif request.method == 'POST':
-        res = str(session.get("current_cart"))
-        '''
-        print(request.form.get('guess1'))
-        print(request.form.get('guess2'))
-        print(request.form.get('guess3'))
-        print(request.form.get('guess0'))
-        '''
-        print(res)
-        return redirect(url_for('items', number=number))
-
 
 @app.route('/items/item/<id_item>', methods=['POST', 'GET'])
 def item(id_item):
-    return make_response(render_template('item.html'))
+    data = [1, 2, 3, 4]
+    dbworker = DBWorker()
+    temp = dbworker.get_good(id_item)
+    inf = temp['characteristics']
+    data = temp['img']
+    ab = temp["about"]
+    return make_response(render_template('item.html', data=data, inf=inf, about=ab))
 
 
 @app.route('/img/<path:path>')
@@ -121,7 +116,6 @@ def logout():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     dbworker = DBWorker()
     if request.method == 'GET':
         return make_response(render_template('login_user.html'))
