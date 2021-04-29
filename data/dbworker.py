@@ -2,7 +2,7 @@
 from werkzeug.security import check_password_hash
 
 from data import db_session
-from data.goods import Good
+from data.goods import Good, GoodToOrder
 from data.item_images import item_image
 from data.location import Address
 from data.orders import Order
@@ -85,29 +85,35 @@ class DBWorker():
     def add_order(self, total_price, status, user=None, address=None, *goods):
         if goods is None or len(goods) == 0:
             raise ValueError(f"Can`t create Order with 0 goods in it: {goods}")
-        if user is int:
-            user = self.db_sess.query(User).filter(User.id == user).first()
+        # if user is int:
+        #    user = self.db_sess.query(User).filter(User.id == user).first()
+        '''
         if address is int:
             address = self.db_sess.query(Address).filter(
-                Address.id == address).first()
+                Address.id == address).first()'''
         order = Order(
             total_price=float(total_price)
         )
 
         if status is int:
             order.status_id = status
-        elif isinstance(status, Status):
-            order.status = status
-
-        if user:
-            order.user = user
+            ''''''
         if address:
-            order.address = address
-
-        order.goods_by_order = goods
-
-        self.db_sess.delete(order)
+            order.address_id = address
+        if user:
+            order.user_id = user
+        self.db_sess.add(order)
         self.db_sess.commit()
+        ''''''
+        for good in goods:
+            if good is int:
+                good = self.db_sess.query(Good).filter(Good.id == good).first()
+                if good is None:
+                    raise ValueError(f'Not found such good')
+                good = self.db_sess.query(Good).filter(Good.id == good).first()
+                order.goods_by_order.append(good)
+                self.db_sess.add(order)
+                self.db_sess.commit()
         return order
 
     def get_orders(self, user_id):

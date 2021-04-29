@@ -90,5 +90,5 @@ class GoodResource(Resource):
 def abort_if_good_not_found(good_id):
     session = db_session.create_session()
     good = session.query(Good).get(good_id)
-    if not user:
+    if not good:
         abort(404, message=f"Good {good_id} not found")

@@ -1,6 +1,7 @@
 import flask
 from flask import make_response, render_template, session, request
 from flask_login import current_user
+from werkzeug.utils import redirect
 
 from data.dbworker import DBWorker
 
@@ -29,32 +30,53 @@ def add_good_to_cart():
     print('New cart is', session['current_cart'])
     return str(len(session['current_cart']))
 
+
 @blueprint.route('/basket', methods=['POST', 'GET'])
 def get_basket():
     dbworker = DBWorker()
-    goods = session['current_cart']
-    dbworker = DBWorker()
-    total = 0
-    data = []
-    for i in goods:
-        gg = dbworker.get_good(i)
-        total = gg['price']
-        data.append(gg)
+    try:
+        goods = session['current_cart']
+        data = []
+        for i in goods:
+            gg = dbworker.get_good(i)
+            total = gg['price']
+            data.append(gg)
+    except Exception:
+        data = None
     city = {'city': 'Город'}
     if current_user.is_authenticated:
         # print(dbworker.get_user(current_user.get_id()))
         city = dbworker.get_address_by_user(current_user.get_id())
     if request.method == 'GET':
-
-
         return make_response(render_template('basket.html', data=data, city=city))
     if request.method == 'POST':
-        print(request.form.get("cancel"))
-        print(request.form.get("accept"))
-        print(request.form.get("remove"))
-        return make_response(render_template('basket.html', data=data, city=city))
+        if request.form.get('Encrypt') == 'Encrypt':
+            # pass
+            session['current_cart'] = []
+            print("Encrypted")
+            return redirect('/')
 
-        pass
+        elif request.form.get('Decrypt') == 'Decrypt':
+            # pass # do something else
+            if current_user.is_authenticated:
+                user = current_user.get_id()
+                dbworker.add_order(111, 1, user, 1, session['current_cart'])
+            else:
+                print(session['current_cart'])
+                dbworker.add_order(111, 1, None, 1, session['current_cart'])
+                session['current_cart'] = []
+            print("Decrypted")
+            return redirect('/')
+        elif 'Remove' in str(request.form):
+            lst = request.form.get('Remove').split()
+            a = int(lst[1])
+            session['current_cart'].remove(a)
+            if session['current_cart'] == [] or session['current_cart'] is None:
+                return redirect('/')
+        else:
+            print('nothing')
+        print(request.form)
+        return make_response(render_template('basket.html', data=data, city=city))
 
 
 @blueprint.route("/session_test")

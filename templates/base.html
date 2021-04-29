@@ -60,7 +60,7 @@
         </a>
         {% if current_user.is_authenticated %}
         <a class="py-2 d-none d-md-inline-block" href="/logout">Выход {{ current_user.name }}</a>
-        <a class="py-2 d-none d-md-inline-block" href="#">Кабинет</a>
+        <a class="py-2 d-none d-md-inline-block" href="/user">Кабинет</a>
         <a class="py-2 d-none d-md-inline-block" href="#">Избранное</a>
         {% else %}
         <a class="py-2 d-none d-md-inline-block " href="/register">Зарегистрироваться</a>

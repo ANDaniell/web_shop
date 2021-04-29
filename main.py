@@ -153,7 +153,6 @@ def UserLogIn():
         dbworker = DBWorker()
         try:
             dbworker.add_user(name, mail, passw)
-            # send_email(mail, 'text body', '<b>HTML</b> body')
             return redirect('/')
 
         except Exception as e:
@@ -182,12 +181,7 @@ def main():
     mail = Mail(app)
     app.register_blueprint(basket.blueprint)
     app.run(host='127.0.0.1', debug=True)
-    # db_session.global_init("db/blogs.db")
 
 
 if __name__ == '__main__':
-    '''
-    dbworker = DBWorker()
-    for i in range(12):
-        a = dbworker.set_good_data(i,)'''
     main()
