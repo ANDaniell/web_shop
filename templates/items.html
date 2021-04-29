@@ -47,8 +47,8 @@
             <div class="my-3 py-3">
                 <h2 class="display-5">{{goods[0]["name"]}}</h2>
                 <p class="lead">{{goods[0]["about"]}}</p>
-                <button value={{goods[3]["id"]}} name="guess0"
-                        class="btn btn-primary btn-add-cart">Добавить в корзину {{goods[0]["id"]}}
+                <button value={{goods[0]["id"]}} name="guess0"
+                        class="btn btn-primary btn-add-cart">Добавить в корзину
                 </button>
                 <button type="submit" on class="btn btn-primary">Войти</button>
             </div>
@@ -75,7 +75,6 @@
                     <div>
                         <img class="mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"
                              src="{{url_for('static', filename=goods[1]['avatar'])}}" alt="альтернативный текст">
-
                     </div>
                 </a>
             </div>

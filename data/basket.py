@@ -32,22 +32,28 @@ def add_good_to_cart():
 @blueprint.route('/basket', methods=['POST', 'GET'])
 def get_basket():
     dbworker = DBWorker()
+    goods = session['current_cart']
+    dbworker = DBWorker()
+    total = 0
+    data = []
+    for i in goods:
+        gg = dbworker.get_good(i)
+        total = gg['price']
+        data.append(gg)
+    city = {'city': 'Город'}
+    if current_user.is_authenticated:
+        # print(dbworker.get_user(current_user.get_id()))
+        city = dbworker.get_address_by_user(current_user.get_id())
     if request.method == 'GET':
-        goods = session['current_cart']
-        dbworker = DBWorker()
-        total = 0
-        data = []
-        for i in goods:
-            gg = dbworker.get_good(i)
-            total = gg['price']
-            data.append(gg)
-        city = {'city': 'Город'}
-        if current_user.is_authenticated:
-            #print(dbworker.get_user(current_user.get_id()))
-            city = dbworker.get_address_by_user(current_user.get_id())
+
 
         return make_response(render_template('basket.html', data=data, city=city))
     if request.method == 'POST':
+        print(request.form.get("cancel"))
+        print(request.form.get("accept"))
+        print(request.form.get("remove"))
+        return make_response(render_template('basket.html', data=data, city=city))
+
         pass
 
 
