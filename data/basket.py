@@ -50,6 +50,7 @@ def get_basket():
     if request.method == 'GET':
         return make_response(render_template('basket.html', data=data, city=city))
     if request.method == 'POST':
+        print(request.form.get('city_user'))
         if request.form.get('Encrypt') == 'Encrypt':
             # pass
             session['current_cart'] = []
@@ -57,17 +58,22 @@ def get_basket():
             return redirect('/')
 
         elif request.form.get('Decrypt') == 'Decrypt':
-
+            if dbworker.get_addreass_by_value(request.form.get('city_user')) is not None:
+                address = dbworker.get_addreass_by_value(request.form.get('city_user'))
+                print('find')
+            else:
+                address = dbworker.add_address(request.form.get('city_user'))
+                print(address)
             # pass # do something else
             if current_user.is_authenticated:
                 user = current_user.get_id()
                 print('user:', user)
                 print('session:', session['current_cart'])
-                dbworker.add_order(111, 1, session['current_cart'], int(user), 1)
+                dbworker.add_order(111, 1, session['current_cart'], int(user), address)
                 session['current_cart'] = []
             else:
                 print(session['current_cart'])
-                dbworker.add_order(111, 1, session['current_cart'], None, 1)
+                dbworker.add_order(111, 1, session['current_cart'], None, address)
                 session['current_cart'] = []
             print("Decrypted")
             return redirect('/')

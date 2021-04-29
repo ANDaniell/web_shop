@@ -47,9 +47,25 @@ class DBWorker():
         user = self.db_sess.query(User).filter(User.email == mail).first()
         return check_password_hash(user.hashed_password, password)
 
+    def add_address(self, city, region=None):
+        address = Address(city=city)
+        if region is not None:
+            address.region = region
+        self.db_sess.add(address)
+        self.db_sess.commit()
+        return address.id
+
     def get_user(self, email):
         user = self.db_sess.query(User).filter(User.email == email).first()
         return user, user.id
+
+    def get_addreass_by_value(self, city):
+        try:
+            address = self.db_sess.query(Address).filter(Address.city == city).first()
+            a = address.id
+        except Exception:
+            return None
+        return a
 
     def get_address_by_user(self, id):
         user = self.db_sess.query(User).filter(User.id == id).first()

@@ -3,7 +3,6 @@ import sqlalchemy
 from flask_login import UserMixin
 from sqlalchemy import orm
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from .db_session import SqlAlchemyBase
 
 
@@ -20,9 +19,7 @@ class User(SqlAlchemyBase, UserMixin):
     # TODO связь с rewiew
 
     orders = orm.relation("Order", back_populates='user')
-
     rewiew = orm.relation("Review", back_populates='user')
-
     favourites = orm.relation("Good",
                               secondary="good_to_user_table",
                               backref="users_table")
