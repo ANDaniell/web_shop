@@ -57,22 +57,35 @@ def get_basket():
             return redirect('/')
 
         elif request.form.get('Decrypt') == 'Decrypt':
+
             # pass # do something else
             if current_user.is_authenticated:
                 user = current_user.get_id()
-                dbworker.add_order(111, 1, user, 1, session['current_cart'])
+                print('user:', user)
+                print('session:', session['current_cart'])
+                dbworker.add_order(111, 1, session['current_cart'], int(user), 1)
+                session['current_cart'] = []
             else:
                 print(session['current_cart'])
-                dbworker.add_order(111, 1, None, 1, session['current_cart'])
+                dbworker.add_order(111, 1, session['current_cart'], None, 1)
                 session['current_cart'] = []
             print("Decrypted")
             return redirect('/')
         elif 'Remove' in str(request.form):
             lst = request.form.get('Remove').split()
             a = int(lst[1])
-            session['current_cart'].remove(a)
+            print(session['current_cart'])
+            print('---'*10)
+            arr = []
+            for i in session['current_cart']:
+                if a != i:
+                    arr.append(i)
+            print(session['current_cart'])
+            session['current_cart'] = arr
             if session['current_cart'] == [] or session['current_cart'] is None:
                 return redirect('/')
+            else:
+                return redirect('/basket')
         else:
             print('nothing')
         print(request.form)
